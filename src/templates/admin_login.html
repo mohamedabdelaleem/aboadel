@@ -1,0 +1,10 @@
+{% from "macro.html" import render_field %}
+<form method="POST" action="{{ url_for('admin') }}">
+
+    {{ form.csrf_token}}
+        {{ render_field(form.email) }}
+        {{ render_field(form.password) }}
+
+    {{ form.submit }}
+
+</form>
