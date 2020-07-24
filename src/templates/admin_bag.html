@@ -1,0 +1,10 @@
+<h1> كل الدورات : </h1>
+<a href="{{ url_for('add_section') }}">اضافة دورة</a>
+
+{% for section in sections %}
+
+<h2><a href='{{ url_for('section_bag', section_id=section.id) }}'> {{section.title}} </a> </h2>
+<a href='{{ url_for('delete_section', section_id=section.id) }}'>حذف</a><br>
+<a href='{{ url_for('edit_section', section_id=section.id) }}'>تعديل</a>
+{% endfor %}
+

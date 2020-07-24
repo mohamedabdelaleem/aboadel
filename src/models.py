@@ -23,6 +23,13 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String, nullable=False)
 
 
+class Section(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    title = db.Column(db.String, nullable=False)
+    description = db.Column(db.Text, default=' ')
+    added_at = db.Column(db.DateTime, default=datetime.now())
+    videos = db.relationship('Video', backref='section')
+
 
 class Video(db.Model):
 
@@ -30,6 +37,7 @@ class Video(db.Model):
     title = db.Column(db.String, nullable=False)
     i_frame = db.Column(db.String, nullable=False)
     added_at = db.Column(db.DateTime, default=datetime.now())
+    section_id = db.Column(db.Integer,db.ForeignKey('section.id'))
 
     def insert(self):
         db.session.add(self)

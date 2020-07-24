@@ -1,0 +1,13 @@
+<html>
+
+<body>
+    <h1>حذف دورة </h1>
+    <form method='post' action="{{ url_for('edit_section', section_id=section.id) }}">
+        <label>العنوان</label>
+        <input type='text' name="title" value="{{ section.title }}"><br>
+        <label>الوصف</label>
+        <textarea name="description">{{ section.description }}</textarea>
+        <input type="submit">
+    </form>
+</body>
+</html>

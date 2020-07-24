@@ -1,0 +1,13 @@
+<html>
+
+<body>
+    <h1>اضافة دورة </h1>
+    <form method='post' action="{{ url_for('add_section') }}">
+        <label>العنوان</label>
+        <input type='text' name="title"><br>
+        <label>الوصف</label>
+        <textarea name="description"></textarea>
+        <input type="submit">
+    </form>
+</body>
+</html>

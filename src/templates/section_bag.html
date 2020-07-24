@@ -1,0 +1,14 @@
+<html>
+
+
+    <body>
+        <h1> All "{{section.title}}" Videos : </h1>
+        <a href="{{ url_for('add_video', section_id=section.id) }}">Add Video </a>
+
+        {% for video in videos %}
+
+        <h2><a href='#'> {{video.title}} </a> </h2>
+        
+        {% endfor %}
+    </body>
+</html>
