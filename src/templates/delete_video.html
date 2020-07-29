@@ -1,0 +1,11 @@
+<html>
+
+<body>
+    <h1>Delete Video</h1>
+    <form method='post' action="{{ url_for('delete_video', section_id=section.id, video_id=video.id) }}">
+        Do you sure you want to delete {{video.title}}
+        <input type="submit" value="Delete">
+        <a href="{{url_for('section_bag', section_id=section.id)}}">Cansel</a>
+    </form>
+</body>
+</html>

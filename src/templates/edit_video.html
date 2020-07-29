@@ -1,0 +1,13 @@
+<html>
+
+<body>
+    <h1>Add video</h1>
+    <form method='post' action="{{ url_for('edit_video', section_id=section.id, video_id=video.id) }}">
+        <label>Title</label>
+        <input type='text' name="title" value='{{video.title}}'><br>
+        <label>I_frame</label>
+        <textarea name="i_frame">{{video.i_frame}}</textarea>
+        <input type="submit">
+    </form>
+</body>
+</html>

@@ -7,6 +7,7 @@ from flask_login import login_required, login_manager, login_user, logout_user, 
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
@@ -14,8 +15,7 @@ def load_user(user_id):
 
 @app.route('/')
 def home():
-    
-    videos = Video.query.all()
+    videos = Video.query.all()    
 
     return render_template('home.html', videos=videos) 
     
@@ -38,7 +38,7 @@ def admin():
 @login_required
 @app.route('/admin/home/')
 def admin_bag():
-    sections = Section.query.order_by(Section.added_at.desc()).all()
+    sections = Section.query.order_by(Section.added_at).all()
 
     return render_template('admin_bag.html', sections=sections)
 
@@ -61,9 +61,9 @@ def add_section():
 
 
 @login_required
-@app.route('/admin/sections/<int:section_id>/home/')
+@app.route('/admin/sections/<int:section_id>/videos/')
 def section_bag(section_id):
-    videos = Video.query.filter_by(section_id=section_id).all()
+    videos = Video.query.filter_by(section_id=section_id).order_by(Video.added_at).all()
     for video in videos:
         print(video.title)
     section = Section.query.filter_by(id=section_id).first()
@@ -105,7 +105,7 @@ def delete_section(section_id):
 
 
 @login_required
-@app.route('/admin/sections/<int:section_id>/home/add/', methods=['GET', 'POST'])
+@app.route('/admin/sections/<int:section_id>/videos/add/', methods=['GET', 'POST'])
 def add_video(section_id):
     section = Section.query.filter_by(id=section_id).first()
 
@@ -119,6 +119,36 @@ def add_video(section_id):
     
     return render_template('add_video.html', section=section)
 
+
+@login_required
+@app.route('/admin/sections/<int:section_id>/videos/<int:video_id>/edit/', methods=['GET', 'POST'])
+def edit_video(section_id, video_id):
+    section = Section.query.filter_by(id=section_id).first()
+    video = Video.query.filter_by(id=video_id).first()
+
+    if request.method == "POST":
+        title = request.form['title']
+        i_frame = request.form['i_frame']
+        video.title = title
+        video.i_frame = i_frame
+        db.session.commit()
+        return redirect(url_for('section_bag', section_id=section_id))
+    
+    return render_template('edit_video.html', section=section, video=video)
+
+
+@login_required
+@app.route('/admin/sections/<int:section_id>/videos/<int:video_id>/delete/', methods=['GET', 'POST'])
+def delete_video(section_id, video_id):
+    section = Section.query.filter_by(id=section_id).first()
+    video = Video.query.filter_by(id=video_id).first()
+    if request.method == "POST":
+        db.session.delete(video)
+        db.session.commit()
+
+        return redirect(url_for('section_bag', section_id=section_id))
+
+    return render_template('delete_video.html', section=section, video=video)
 
 if __name__ == "__main__":
     app.run(debug=True)

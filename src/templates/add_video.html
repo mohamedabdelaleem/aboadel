@@ -1,11 +1,11 @@
 <html>
 
 <body>
-    <h1>اضافة دورة </h1>
+    <h1>Add video</h1>
     <form method='post' action="{{ url_for('add_video', section_id=section.id) }}">
-        <label>العنوان</label>
+        <label>Title</label>
         <input type='text' name="title"><br>
-        <label>الوصف</label>
+        <label>I_frame</label>
         <textarea name="i_frame"></textarea>
         <input type="submit">
     </form>

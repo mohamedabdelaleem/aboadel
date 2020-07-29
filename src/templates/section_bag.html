@@ -7,7 +7,9 @@
 
         {% for video in videos %}
 
-        <h2><a href='#'> {{video.title}} </a> </h2>
+        <h2> {{video.title}} </h2>
+        <p><a href="{{ url_for('edit_video', section_id=section.id, video_id=video.id) }}"> Edit </a></p>
+        <p><a href="{{ url_for('delete_video', section_id=section.id, video_id=video.id) }}"> Delete </a></p>
         
         {% endfor %}
     </body>
